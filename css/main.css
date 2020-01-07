@@ -1,2 +1,42 @@
-// Css for Holding the Layout of the main site or project
-// css for components & templates not included in this
+/* Css for Holding the Layout of the main site or project
+ css for components & templates not included in this
+*/
+
+.main-frame{
+position:fixed;
+top:0
+left:0;
+right:0;
+bottom:0;
+}
+@media only screen and (max-width:800px) {
+  .main-frame{
+    display:none;
+  }
+}
+#demo{
+width:500px;
+height:auto;
+display: flex;
+flex-direction: column;
+}
+#demo canvas{
+max-width:166px;
+max-height:200px;
+}
+#section-1{
+position:fixed;
+left:-999px;
+}
+
+#demo-side{
+	
+	position:fixed;
+	right:0;
+	top:0;
+	z-index:20;
+}
+
+.example{
+	border:1px solid green;
+}
