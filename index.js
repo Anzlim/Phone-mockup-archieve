@@ -24,18 +24,19 @@ function color(jscolor) {
 function mock1(){
 
 link = "https://www.googleapis.com/blogger/v3/blogs/2743943784739529393/posts/8769189678803747891?key=AIzaSyB3q5WvHNIeHpcL4TBz_jMUfFaWNP63qTA";
-
+document.getElementById("theme-showcase-id").style.display = "none";
 loadDoc();
 }
 function mock2(){
 link = "https://www.googleapis.com/blogger/v3/blogs/2743943784739529393/posts/6717697854452652354?key=AIzaSyB3q5WvHNIeHpcL4TBz_jMUfFaWNP63qTA";
 loadDoc();
+document.getElementById("theme-showcase-id").style.display = "none";
 }
 
 function mock3(){
-link = "https://www.googleapis.com/blogger/v3/blogs/2743943784739529393/posts/2614955872249758948?key=AIzaSyB3q5WvHNIeHpcL4TBz_jMUfFaWNP63qTA";
+link = "https://www.googleapis.com/blogger/v3/blogs/2743943784739529393/posts/4814603191095965719?key=AIzaSyB3q5WvHNIeHpcL4TBz_jMUfFaWNP63qTA";
 loadDoc();
-
+document.getElementById("theme-showcase-id").style.display = "none";
 }
 
 function mock4(){
@@ -53,8 +54,9 @@ link = "https://www.googleapis.com/blogger/v3/blogs/2743943784739529393/posts/87
 loadDoc();
 }
 
+
 function loadDoc() {
-document.getElementById("loader-block").style.display = "block";
+//document.getElementById("loader-block").style.display = "block";
 var xmlhttp = new XMLHttpRequest();
 xmlhttp.onreadystatechange = function() {
   if (this.readyState == 4 && this.status == 200) {
@@ -65,18 +67,35 @@ alert(myObj.content);
 let tryobj = myObj.content;
 //alert(Array.isArray(tryobj));
 
-     document.getElementById("demo").innerHTML = "";
- let appy = document.getElementById("demo");
+     document.getElementById("demo-s1").innerHTML = "";
+ let appy = document.getElementById("demo-s1");
  document.getElementById("section-1").innerHTML = myObj.content;
 
 /*** html2canvas **/
 
 let imgx = document.getElementsByClassName("example");
 let d = imgx.length;
-
+console.log("yhi");
 for (let t = 0;t<d;t++){
 
-window.scrollTo(0,0);
+
+
+domtoimage.toPng(imgx[t])
+      .then(function (dataUrl) {
+        let ximg = new Image();
+        ximg.src = dataUrl;
+        console.log(dataUrl);
+        console.log("t :" + t);
+        ximg.setAttribute("id",t);
+        ximg.setAttribute("onclick","clicker(this)");
+        appy.appendChild(ximg);
+      });
+
+
+
+
+/*
+
 html2canvas(imgx[t],{
 scale:1,
 
@@ -85,7 +104,8 @@ scale:1,
  canvas.setAttribute("onclick","clicker(this)");
 appy.appendChild(canvas);
 
-});
+});*/
+
 }
 
 
@@ -229,11 +249,45 @@ document.body.innerHTML = restorepage;
 
 
 function clicker(obj){
-	let myid = obj.id;
+  let myid = obj.id;
+  console.log(myid);
 	let imgx = document.getElementsByClassName("example");
     let d = imgx.length;
 	
 	 
-    document.getElementById("demo-side").innerHTML = "<div>" + imgx[myid].innerHTML +"</div>";
+    document.getElementById("single-template").innerHTML = "<div>" + imgx[myid].innerHTML +"</div>";
 	alert(myid);
+}
+
+/*function takeScreenShot(){
+	window.scrollTo(0,0);
+	html2canvas(document.querySelector("#toprint"),{
+scale:1,
+
+}).then(canvas => {
+	alert(canvas)
+ var img = canvas.toDataURL('image/jpeg');
+ let images = document.createElement("img");
+ images.src = img ;
+ let alink = document.createElement("a");
+ alink.href = img;
+ alink.appendChild(images);
+alink.setAttribute("download", "downloadit");
+alink.click();
+//document.body.appendChild(alink);
+
+ 
+ 
+});
+	
+}*/
+
+function takeScreenShot(){
+	window.scrollTo(0,0);
+	domtoimage.toBlob(document.getElementById('single-template'))
+    .then(function (blob) {
+		console.log(blob);
+        window.saveAs(blob, 'my-node.png');
+    });
+      
 }
